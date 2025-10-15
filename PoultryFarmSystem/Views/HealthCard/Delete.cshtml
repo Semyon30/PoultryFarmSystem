@@ -1,0 +1,74 @@
+﻿@model HealthCard
+
+@{
+    ViewData["Title"] = "Удаление медицинской карты";
+}
+
+@using (Html.BeginForm("Delete", "HealthCard", FormMethod.Post, new { @class = "mt-4" }))
+{
+    @Html.HiddenFor(m => m.Id)
+    
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-dark">Удаление медицинской карты</h2>
+            <hr />
+        </div>
+
+        <div class="alert alert-dismissible alert-primary">
+            <h4 class="alert-heading">Внимание!</h4>
+            <p>Вы уверены, что хотите удалить эту медицинскую карту? Это действие нельзя отменить.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    <label class="p-0">Птица</label>
+                    <input type="text" class="form-control" disabled value="@Model.Bird.BirdNumber - @Model.Bird.Type" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Vaccinations, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextAreaFor(m => m.Vaccinations, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled", rows = "3",style = "resize: none;" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Diseases, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextAreaFor(m => m.Diseases, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled", rows = "3",style = "resize: none;" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Allergies, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextAreaFor(m => m.Allergies, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled", rows = "2",style = "resize: none;" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.SpecialNotes, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextAreaFor(m => m.SpecialNotes, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled", rows = "2",style = "resize: none;"})
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <a href="@Url.Action("Index", "HealthCard")" class="btn btn-secondary form-control">
+                    <i class="bi bi-arrow-left"></i> Назад к списку
+                </a>
+            </div>
+            <div class="col-3">
+                <button type="submit" class="btn btn-primary form-control">
+                    <i class="bi bi-trash"></i> Удалить
+                </button>
+            </div>
+        </div>
+    </div>
+}

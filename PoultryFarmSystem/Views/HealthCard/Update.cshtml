@@ -1,0 +1,78 @@
+﻿@model HealthCard
+
+@{
+    ViewData["Title"] = "Редактирование медицинской карты";
+}
+
+@using (Html.BeginForm("Update", "HealthCard", FormMethod.Post, new { @class = "mt-4" }))
+{
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.BirdId)
+
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-dark">Редактирование медицинской карты</h2>
+            <hr />
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    <label class="p-0">Птица</label>
+                    <input type="text" class="form-control" readonly="" value="@Model.Bird.BirdNumber - @Model.Bird.Type" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Vaccinations, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextAreaFor(m => m.Vaccinations, new { @class = "form-control", rows = "3", placeholder = "Список вакцин через запятую",style = "resize: none;" })
+                    @Html.ValidationMessageFor(m => m.Vaccinations, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Diseases, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextAreaFor(m => m.Diseases, new { @class = "form-control", rows = "3", placeholder = "Перенесенные заболевания",style = "resize: none;" })
+                    @Html.ValidationMessageFor(m => m.Diseases, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Allergies, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextAreaFor(m => m.Allergies, new { @class = "form-control", rows = "2", placeholder = "Аллергические реакции",style = "resize: none;" })
+                    @Html.ValidationMessageFor(m => m.Allergies, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.SpecialNotes, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextAreaFor(m => m.SpecialNotes, new { @class = "form-control", rows = "2", placeholder = "Особые заметки и рекомендации",style = "resize: none;" })
+                    @Html.ValidationMessageFor(m => m.SpecialNotes, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <a href="@Url.Action("Index", "HealthCard")" class="btn btn-secondary form-control">
+                    <i class="bi bi-arrow-left"></i> Назад к списку
+                </a>
+            </div>
+            <div class="col-3">
+                <button type="submit" class="btn btn-warning form-control">
+                    <i class="bi bi-pencil"></i> Обновить
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

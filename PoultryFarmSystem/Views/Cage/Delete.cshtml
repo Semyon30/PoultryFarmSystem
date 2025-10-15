@@ -1,0 +1,72 @@
+﻿@model Cage
+
+@{
+    ViewData["Title"] = "Удаление клетки";
+}
+
+@using (Html.BeginForm("Delete", "Cage", FormMethod.Post, new { @class = "mt-4" }))
+{
+    @Html.HiddenFor(m => m.Id)
+    
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-dark">Удаление клетки</h2>
+            <hr />
+        </div>
+
+        <div class="alert alert-dismissible alert-primary">
+            <h4 class="alert-heading">Внимание!</h4>
+            <p>Вы уверены, что хотите удалить эту клетку? Это действие нельзя отменить.</p>
+            <p class="mb-0"><strong>Внимание:</strong> При удалении клетки также удалятся все связанные птицы и назначения.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    <label class="p-0">Номер клетки</label>
+                    @Html.TextBoxFor(m => m.Number, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Capacity, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.Capacity, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Section, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.Section, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.LastCleaning, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.LastCleaning, "{0:yyyy-MM-dd}", new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.LastMaintenance, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.LastMaintenance, "{0:yyyy-MM-dd}", new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <a href="@Url.Action("Index", "Cage")" class="btn btn-secondary form-control">
+                    <i class="bi bi-arrow-left"></i> Назад к списку
+                </a>
+            </div>
+            <div class="col-3">
+                <button type="submit" class="btn btn-primary form-control">
+                    <i class="bi bi-trash"></i> Удалить
+                </button>
+            </div>
+        </div>
+    </div>
+}

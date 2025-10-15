@@ -1,0 +1,100 @@
+﻿@model CageFilterVM
+
+@{
+    ViewData["Title"] = "Клетки";
+}
+
+<div class="container">
+    <div class="row pt-3 pb-2">
+        <div class="col-6">
+            <h2 class="text-dark">
+                Клетки
+            </h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Cage" asp-action="Create" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Добавить клетку
+            </a>
+        </div>
+    </div>
+
+    <form method="get" asp-action="Index" class="mb-4">
+        <div class="row align-items-end">
+            <div class="col-md-3 mb-2">
+                <label class="form-label">Номер клетки</label>
+                <input type="text" name="numberFilter" value="@Model.NumberFilter"
+                       class="form-control" placeholder="Введите номер"/>
+            </div>
+            <div class="col-md-3 mb-2">
+                <label class="form-label">Дата уборки</label>
+                <input type="date" name="cleaningDateFilter" value="@Model.CleaningDateFilter?.ToString("yyyy-MM-dd")"
+                       class="form-control"/>
+            </div>
+            <div class="col-md-3 mb-2">
+                <label class="form-label">Дата обслуживания</label>
+                <input type="date" name="maintenanceDateFilter" value="@Model.MaintenanceDateFilter?.ToString("yyyy-MM-dd")"
+                       class="form-control"/>
+            </div>
+            <div class="col-md-3 mb-2">
+                <button type="submit" class="btn btn-dark w-100">
+                    <i class="bi bi-search"></i> Найти
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-hover table-bordered text-center align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Номер клетки</th>
+                <th>Секция</th>
+                <th>Вместимость</th>
+                <th>Заполненность %</th>
+                <th>Последняя уборка</th>
+                <th>Последнее обслуживание</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cage in Model.Cages)
+            {
+                var occupancyPercentage = ViewBag.OccupancyPercentageDict != null ? 
+                    ViewBag.OccupancyPercentageDict[cage.Id] : 0;
+                
+                var textColorClass = occupancyPercentage switch
+                {
+                    >= 90 => "text-primary fw-bold",
+                    >= 70 => "text-warning fw-bold",
+                    _ => "text-success"
+                };
+                
+                
+                var daysSinceCleaning = (DateTime.Now - cage.LastCleaning).Days;
+                var daysSinceMaintenance = (DateTime.Now - cage.LastMaintenance).Days;
+                
+                <tr>
+                    <td>@cage.Number</td>
+                    <td>@cage.Section</td>
+                    <td>@cage.Capacity</td>
+                    <td>
+                        <span class="@textColorClass fs-5">
+                            @occupancyPercentage%
+                        </span>
+                    </td>
+                    <td>@cage.LastCleaning.ToString("d")</td>
+                    <td>@cage.LastMaintenance.ToString("d")</td>
+                    <td>
+                        <div class="btn-group gap-2" role="group">
+                            <a asp-controller="Cage" asp-action="Update" asp-route-id="@cage.Id" class="btn btn-warning">
+                                <i class="bi bi-pencil"></i> Изменить
+                            </a>
+                            <a asp-controller="Cage" asp-action="Delete" asp-route-id="@cage.Id" class="btn btn-primary">
+                                <i class="bi bi-trash"></i> Удалить
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

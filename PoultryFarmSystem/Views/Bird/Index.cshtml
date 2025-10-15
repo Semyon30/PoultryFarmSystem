@@ -1,0 +1,117 @@
+﻿@model BirdFilterVM
+
+@{
+    ViewData["Title"] = "Птицы";
+}
+
+<div class="container">
+    <div class="row pt-3 pb-2">
+        <div class="col-6">
+            <h2 class="text-dark">
+                Птицы
+            </h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Bird" asp-action="Create" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Добавить птицу
+            </a>
+        </div>
+    </div>
+
+    <form method="get" asp-action="Index" class="mb-4">
+        <div class="row">
+            <div class="col-md-4 mb-2">
+                <input type="text" name="birdNumberFilter" value="@Model.BirdNumberFilter"
+                       class="form-control" placeholder="Поиск по номеру птицы" />
+            </div>
+            <div class="col-md-3 mb-2">
+                <select name="statusFilter" class="form-select">
+                    <option value="">Все статусы</option>
+                    <option value="Активна" selected="@(Model.StatusFilter == "Активна")">Активна</option>
+                    <option value="Больна" selected="@(Model.StatusFilter == "Больна")">Больна</option>
+                    <option value="Лечение" selected="@(Model.StatusFilter == "Лечение")">Лечение</option>
+                    <option value="Карантин" selected="@(Model.StatusFilter == "Карантин")">Карантин</option>
+                    <option value="Умерла" selected="@(Model.StatusFilter == "Умерла")">Умерла</option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-2">
+                <select name="typeFilter" class="form-select">
+                    <option value="">Все типы</option>
+                    <option value="Курица" selected="@(Model.TypeFilter == "Курица")">Курица</option>
+                    <option value="Утка" selected="@(Model.TypeFilter == "Утка")">Утка</option>
+                    <option value="Гусь" selected="@(Model.TypeFilter == "Гусь")">Гусь</option>
+                    <option value="Индейка" selected="@(Model.TypeFilter == "Индейка")">Индейка</option>
+                    <option value="Перепел" selected="@(Model.TypeFilter == "Перепел")">Перепел</option>
+                </select>
+            </div>
+            <div class="col-md-2 mb-2">
+                <button type="submit" class="btn btn-dark w-100">
+                    <i class="bi bi-search"></i> Найти
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-hover table-bordered text-center align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Номер птицы</th>
+                <th>Тип</th>
+                <th>Вес (кг)</th>
+                <th>Статус</th>
+                <th>Последняя проверка</th>
+                <th>Возраст (дней)</th>
+                <th>Партия</th>
+                <th>Клетка</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var bird in Model.Birds)
+            {
+                <tr>
+                    <td>@bird.BirdNumber</td>
+                    <td>@bird.Type</td>
+                    <td>@bird.Weight.ToString("0.00")</td>
+                    <td>
+                        @switch (bird.Status)
+                        {
+                            case BirdStatus.Активна:
+                                <span class="badge bg-success">Активна</span>
+                                break;
+                            case BirdStatus.Больна:
+                                <span class="badge bg-warning text-dark">Больна</span>
+                                break;
+                            case BirdStatus.Лечение:
+                                <span class="badge bg-info">Лечение</span>
+                                break;
+                            case BirdStatus.Карантин:
+                                <span class="badge bg-danger">Карантин</span>
+                                break;
+                            case BirdStatus.Умерла:
+                                <span class="badge bg-secondary">Умерла</span>
+                                break;
+                            default:
+                                <span class="badge bg-secondary">@bird.Status</span>
+                                break;
+                        }
+                    </td>
+                    <td>@bird.LastHealthCheck.ToString("d")</td>
+                    <td>@((DateTime.Now - bird.Batch.HatchDate).Days)</td>
+                    <td>@bird.Batch.BatchNumber</td>
+                    <td>@bird.Cage.Number</td>
+                    <td>
+                        <div class="btn-group gap-2" role="group">
+                            <a asp-controller="Bird" asp-action="Update" asp-route-id="@bird.Id" class="btn btn-warning">
+                                <i class="bi bi-pencil"></i> Изменить
+                            </a>
+                            <a asp-controller="Bird" asp-action="Delete" asp-route-id="@bird.Id" class="btn btn-primary">
+                                <i class="bi bi-trash"></i> Удалить
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,103 @@
+﻿@model Worker
+
+@{
+    ViewData["Title"] = "Удаление работника";
+}
+
+@using (Html.BeginForm("Delete", "Worker", FormMethod.Post, new { @class = "mt-4" }))
+{
+    @Html.HiddenFor(m => m.Id)
+    
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-dark">Удаление работника</h2>
+            <hr />
+        </div>
+
+        <div class="alert alert-dismissible alert-primary">
+            <h4 class="alert-heading">Внимание!</h4>
+            <p>Вы уверены, что хотите удалить этого работника? Это действие нельзя отменить.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.LastName, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.FirstName, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.MiddleName, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Phone, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.BirthDate, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.BirthDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.Type, htmlAttributes: new { @class = "p-0" })
+                @Html.TextBoxFor(m => m.Type, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.HireDate, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.HireDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Salary, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.Salary, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3 row p-1">
+            <div class="form-check">
+                @Html.CheckBoxFor(m => m.IsActive, new {
+                    @class = "form-check-input",
+                    style = "width: 20px; height: 20px; margin-right: 10px;",
+                    @disabled = "disabled"
+                })
+                @Html.LabelFor(m => m.IsActive, htmlAttributes: new {
+                    @class = "form-check-label fs-5 fw-medium"
+                })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <a href="@Url.Action("Index", "Worker")" class="btn btn-secondary form-control">
+                    <i class="bi bi-arrow-left"></i> Назад к списку
+                </a>
+            </div>
+            <div class="col-3">
+                <button type="submit" class="btn btn-primary form-control" >
+                    <i class="bi bi-trash"></i> Удалить
+                </button>
+            </div>
+        </div>
+    </div>
+}

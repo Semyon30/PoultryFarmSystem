@@ -1,0 +1,110 @@
+﻿@model Batch
+
+@{
+    ViewData["Title"] = "Добавление новой партии";
+}
+
+@using (Html.BeginForm("Create", "Batch", FormMethod.Post, new { @class = "mt-4" }))
+{
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-dark">Добавление новой партии</h2>
+            <hr />
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    <label class="p-0">Номер партии</label>
+                    <input type="text" class="form-control" readonly placeholder="Сгенерируется автоматически" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Breed, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.Breed, new { @class = "form-control", placeholder = "Порода птицы" })
+                    @Html.ValidationMessageFor(m => m.Breed, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Type, htmlAttributes: new { @class = "p-0" })
+                    @Html.DropDownListFor(m => m.Type, 
+                        ViewBag.BirdTypes as IEnumerable<SelectListItem>,
+                        "Выберите тип птицы",
+                        new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Source, htmlAttributes: new { @class = "p-0" })
+                    @Html.DropDownListFor(m => m.Source, 
+                        ViewBag.SourceTypes as IEnumerable<SelectListItem>,
+                        "Выберите источник",
+                        new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Source, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Count, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.Count, new { @class = "form-control", type = "number", min = "1" })
+                    @Html.ValidationMessageFor(m => m.Count, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.HatchDate, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.HatchDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                    @Html.ValidationMessageFor(m => m.HatchDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.ArrivalDate, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.ArrivalDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                    @Html.ValidationMessageFor(m => m.ArrivalDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3 row p-1">
+                    <div class="form-check mt-2">
+                        @Html.CheckBoxFor(m => m.IsArrived, new {
+                            @class = "form-check-input",
+                            style = "width: 20px; height: 20px; margin-right: 10px;",
+                            id = "isArrivedCheckbox"
+                        })
+                        @Html.LabelFor(m => m.IsArrived, "Партия прибыла", new {
+                            @class = "form-check-label fs-6 fw-medium"
+                        })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.IsArrived, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <a href="@Url.Action("Index", "Batch")" class="btn btn-secondary form-control">
+                    <i class="bi bi-arrow-left"></i> Назад к списку
+                </a>
+            </div>
+            <div class="col-3">
+                <button type="submit" class="btn btn-success form-control">
+                    <i class="bi bi-plus-square"></i> Создать
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,93 @@
+﻿@model WorkerFilterVM
+
+@{
+    ViewData["Title"] = "Работники";
+}
+
+<div class="container">
+    <div class="row pt-3 pb-2">
+        <div class="col-6">
+            <h2 class="text-dark">
+                Работники
+            </h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Worker" asp-action="Create" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Добавить работника
+            </a>
+        </div>
+    </div>
+
+    <form method="get" asp-action="Index" class="mb-4">
+        <div class="row">
+            <div class="col-md-8 mb-2">
+                <input type="text" name="nameFilter" value="@Model.NameFilter"
+                       class="form-control" placeholder="Поиск по ФИО" />
+            </div>
+            <div class="col-md-2 mb-2">
+                <select name="typeFilter" class="form-select">
+                    <option value="">Все должности</option>
+                    <option value="Руководитель" selected="@(Model.TypeFilter == "Руководитель")">Руководитель</option>
+                    <option value="Ветеринар" selected="@(Model.TypeFilter == "Ветеринар")">Ветеринар</option>
+                    <option value="Уборщик" selected="@(Model.TypeFilter == "Уборщик")">Уборщик</option>
+                    <option value="Сборщик" selected="@(Model.TypeFilter == "Сборщик")">Сборщик</option>
+                    <option value="Инженер" selected="@(Model.TypeFilter == "Инженер")">Инженер</option>
+                    <option value="Кормильщик" selected="@(Model.TypeFilter == "Кормильщик")">Кормильщик</option>
+                </select>
+            </div>
+            <div class="col-md-2 mb-2">
+                <button type="submit" class="btn btn-dark w-100">
+                    <i class="bi bi-search"></i> Найти
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-hover table-bordered text-center align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>ФИО</th>
+                <th>Должность</th>
+                <th>Телефон</th>
+                <th>Дата рождения</th>
+                <th>Дата найма</th>
+                <th>Статус</th>
+                <th>Зарплата</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var worker in Model.Workers)
+            {
+                <tr>
+                    <td>@worker.LastName @worker.FirstName @worker.MiddleName</td>
+                    <td>@worker.Type</td>
+                    <td>@worker.Phone</td>
+                    <td>@(worker.BirthDate?.ToString("d") ?? "Не указана")</td>
+                    <td>@worker.HireDate.ToString("d")</td>
+                    <td>
+                        @if (worker.IsActive)
+                        {
+                            <span class="badge bg-success">Активен</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning text-dark">Неактивен</span>
+                        }
+                    </td>
+                    <td>@worker.Salary.ToString("C")</td>
+                    <td>
+                        <div class="btn-group gap-2" role="group">
+                            <a asp-controller="Worker" asp-action="Update" asp-route-id="@worker.Id" class="btn btn-warning">
+                                <i class="bi bi-pencil"></i> Изменить
+                            </a>
+                            <a asp-controller="Worker" asp-action="Delete" asp-route-id="@worker.Id" class="btn btn-primary">
+                                <i class="bi bi-trash"></i>  Удалить
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

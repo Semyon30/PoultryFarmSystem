@@ -1,0 +1,109 @@
+﻿@model Assignment
+
+@{
+    ViewData["Title"] = "Добавление задания";
+}
+
+@using (Html.BeginForm("Create", "Assignment", FormMethod.Post, new { @class = "mt-4" }))
+{
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-dark">Добавление задания</h2>
+            <hr />
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Title, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "Название задания" })
+                    @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Description, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "2", placeholder = "Описание задания", style = "resize: none;" })
+                    @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.StartDate, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.StartDate, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local" })
+                    @Html.ValidationMessageFor(m => m.StartDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.EndDate, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.EndDate, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local" })
+                    @Html.ValidationMessageFor(m => m.EndDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Status, htmlAttributes: new { @class = "p-0" })
+                    @Html.DropDownListFor(m => m.Status, 
+                        ViewBag.Statuses as IEnumerable<SelectListItem>,
+                        "Выберите статус",
+                        new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Priority, htmlAttributes: new { @class = "p-0" })
+                    @Html.DropDownListFor(m => m.Priority, 
+                        ViewBag.Priorities as IEnumerable<SelectListItem>,
+                        "Выберите приоритет",
+                        new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Priority, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.WorkerId, "Сотрудник", new { @class = "p-0" })
+                    @Html.DropDownListFor(m => m.WorkerId, 
+                        ViewBag.Workers as IEnumerable<SelectListItem>,
+                        "Выберите сотрудника",
+                        new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.WorkerId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.CageId, "Клетка", new { @class = "p-0" })
+                    @Html.DropDownListFor(m => m.CageId, 
+                        ViewBag.Cages as IEnumerable<SelectListItem>,
+                        "Выберите клетку",
+                        new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.CageId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <a href="@Url.Action("Index", "Assignment")" class="btn btn-secondary form-control">
+                    <i class="bi bi-arrow-left"></i> Назад к списку
+                </a>
+            </div>
+            <div class="col-3">
+                <button type="submit" class="btn btn-success form-control">
+                    <i class="bi bi-plus-square"></i> Создать
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

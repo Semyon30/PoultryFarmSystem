@@ -1,0 +1,108 @@
+﻿@model Assignment
+
+@{
+    ViewData["Title"] = "Удаление задания";
+}
+
+@using (Html.BeginForm("Delete", "Assignment", FormMethod.Post, new { @class = "mt-4" }))
+{
+    @Html.HiddenFor(m => m.Id)
+    
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-dark">Удаление задания</h2>
+            <hr />
+        </div>
+
+        <div class="alert alert-dismissible alert-primary">
+            <h4 class="alert-heading">Внимание!</h4>
+            <p>Вы уверены, что хотите удалить это задание? Это действие нельзя отменить.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Title, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Description, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled", rows = "2", style = "resize: none;" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.StartDate, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.StartDate, "{0:yyyy-MM-dd HH:mm}", new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.EndDate, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.EndDate, "{0:yyyy-MM-dd HH:mm}", new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Status, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.Status, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Priority, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.Priority, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    <label class="p-0">Сотрудник</label>
+                    <input type="text" class="form-control" disabled value="@Model.Worker.LastName @Model.Worker.FirstName @Model.Worker.MiddleName" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    <label class="p-0">Клетка</label>
+                    <input type="text" class="form-control" disabled value="@Model.Cage.Number" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.CompletedDate, htmlAttributes: new { @class = "p-0" })
+                    @if (Model.CompletedDate.HasValue)
+                    {
+                        @Html.TextBoxFor(m => m.CompletedDate, "{0:yyyy-MM-dd HH:mm}", new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                    }
+                    else
+                    {
+                        <input type="text" class="form-control" disabled value="Не завершено" />
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <a href="@Url.Action("Index", "Assignment")" class="btn btn-secondary form-control">
+                    <i class="bi bi-arrow-left"></i> Назад к списку
+                </a>
+            </div>
+            <div class="col-3">
+                <button type="submit" class="btn btn-primary form-control">
+                    <i class="bi bi-trash"></i> Удалить
+                </button>
+            </div>
+        </div>
+    </div>
+}

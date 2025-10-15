@@ -1,0 +1,72 @@
+﻿@model Cage
+
+@{
+    ViewData["Title"] = "Добавление новой клетки";
+}
+
+@using (Html.BeginForm("Create", "Cage", FormMethod.Post, new { @class = "mt-4" }))
+{
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-dark">Добавление новой клетки</h2>
+            <hr />
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    <label class="p-0">Номер клетки</label>
+                    <input type="text" class="form-control" readonly placeholder="Сгенерируется автоматически" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Capacity, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.Capacity, new { @class = "form-control", type = "number", min = "1", placeholder = "Вместимость клетки" })
+                    @Html.ValidationMessageFor(m => m.Capacity, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Section, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.Section, new { @class = "form-control", placeholder = "Секция (например: AAA,BAB)" })
+                    @Html.ValidationMessageFor(m => m.Section, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.LastCleaning, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.LastCleaning, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                    @Html.ValidationMessageFor(m => m.LastCleaning, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.LastMaintenance, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.LastMaintenance, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                    @Html.ValidationMessageFor(m => m.LastMaintenance, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <a href="@Url.Action("Index", "Cage")" class="btn btn-secondary form-control">
+                    <i class="bi bi-arrow-left"></i> Назад к списку
+                </a>
+            </div>
+            <div class="col-3">
+                <button type="submit" class="btn btn-success form-control">
+                    <i class="bi bi-plus-square"></i> Создать
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

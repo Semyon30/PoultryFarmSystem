@@ -1,0 +1,87 @@
+﻿@model Bird
+
+@{
+    ViewData["Title"] = "Удаление птицы";
+}
+
+@using (Html.BeginForm("Delete", "Bird", FormMethod.Post, new { @class = "mt-4" }))
+{
+    @Html.HiddenFor(m => m.Id)
+    
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-dark">Удаление птицы</h2>
+            <hr />
+        </div>
+
+        <div class="alert alert-dismissible alert-primary">
+            <h4 class="alert-heading">Внимание!</h4>
+            <p>Вы уверены, что хотите удалить эту птицу? Это действие нельзя отменить.</p>
+            <p class="mb-0"><strong>Внимание:</strong> При удалении птицы также удалится его связанная медицинская карта.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    <label class="p-0">Номер птицы</label>
+                    @Html.TextBoxFor(m => m.BirdNumber, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Weight, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.Weight, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Type, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.Type, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.Status, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.Status, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.LastHealthCheck, htmlAttributes: new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.LastHealthCheck, "{0:yyyy-MM-dd}", new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.BatchId, "Партия", new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.Batch.BatchNumber, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3 row p-1">
+                    @Html.LabelFor(m => m.CageId, "Клетка", new { @class = "p-0" })
+                    @Html.TextBoxFor(m => m.Cage.Number, new { @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <a href="@Url.Action("Index", "Bird")" class="btn btn-secondary form-control">
+                    <i class="bi bi-arrow-left"></i> Назад к списку
+                </a>
+            </div>
+            <div class="col-3">
+                <button type="submit" class="btn btn-primary form-control">
+                    <i class="bi bi-trash"></i> Удалить
+                </button>
+            </div>
+        </div>
+    </div>
+}
